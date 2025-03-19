@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo
+package com.elekiwi.moviesappprometeo.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
