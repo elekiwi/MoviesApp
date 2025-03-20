@@ -13,7 +13,13 @@
         android:theme="@style/Theme.MoviesAppPrometeo"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".presentation.DetailMovieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,12 +28,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MoviesAppPrometeo">
-
-        </activity>
+            android:theme="@style/Theme.MoviesAppPrometeo" />
     </application>
 
 </manifest>
