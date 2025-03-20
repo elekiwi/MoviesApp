@@ -2,7 +2,7 @@ package com.elekiwi.moviesappprometeo.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.elekiwi.moviesappprometeo.domain.MovieItemModel
+import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

@@ -18,12 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.elekiwi.moviesappprometeo.domain.MovieItemModel
+import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
 
 @Composable
 fun MovieItem(movie: MovieItemModel, onItemClick: (MovieItemModel) -> Unit) {
