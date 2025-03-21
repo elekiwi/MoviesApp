@@ -2,7 +2,7 @@ package com.elekiwi.moviesappprometeo.core.data.mappers
 
 import com.elekiwi.moviesappprometeo.core.data.local.MovieEntity
 import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
-import com.elekiwi.moviesappprometeo.core.domain.Movie
+import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 
 
 fun MovieItemModel.toMovieEntity(): MovieEntity {
