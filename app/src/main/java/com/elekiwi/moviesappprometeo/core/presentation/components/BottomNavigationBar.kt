@@ -20,10 +20,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.elekiwi.moviesappprometeo.R
+import com.elekiwi.moviesappprometeo.core.presentation.Screen
 
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(navController: NavController) {
     val bottomMenuItemsList = prepareButtomMenu()
     val contextForToast = LocalContext.current.applicationContext
     var selecttedItem by remember {
@@ -50,6 +52,18 @@ fun BottomNavigationBar() {
                 onClick = {
                     selecttedItem = bottomMenuItem.label
                     Toast.makeText(contextForToast, bottomMenuItem.label, Toast.LENGTH_SHORT).show()
+                    when (selecttedItem) {
+                        "Home" -> {
+                            navController.navigate(Screen.MovieList)
+                        }
+                        "Favorite" -> {
+                            navController.navigate(Screen.ToSeeMovie)
+                        }
+                        "Seen" -> {
+                            navController.navigate(Screen.ToSeeMovie)
+                        }
+                        "For price" -> {}
+                    }
                 },
                 icon = {
                     Icon(

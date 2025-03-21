@@ -45,152 +45,74 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.elekiwi.moviesappprometeo.core.presentation.components.BottomNavigationBar
 import com.elekiwi.moviesappprometeo.MovieItem
 import com.elekiwi.moviesappprometeo.R
 import com.elekiwi.moviesappprometeo.core.presentation.components.SearchBar
 import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
+import com.elekiwi.moviesappprometeo.presentation.AddMovieScreen
 import com.elekiwi.moviesappprometeo.presentation.DetailMovieActivity
-import com.elekiwi.moviesappprometeo.viewModels.MoviesViewModel
+import com.elekiwi.moviesappprometeo.presentation.DetailScreen
+import com.elekiwi.moviesappprometeo.presentation.ToSeeMovieScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen(onItemClick = { item ->
+            /*MainScreen(onItemClick = { item ->
                 val intent = Intent(this, DetailMovieActivity::class.java)
                 intent.putExtra("object", item)
                 startActivity(intent)
-            })
-        }
-    }
-}
-
-@Preview
-@Composable
-fun MainScreen(onItemClick: (MovieItemModel) -> Unit = {}) {
-    Scaffold(
-        bottomBar = { BottomNavigationBar() },
-        floatingActionButton = {
-            Box(
-                modifier = Modifier
-                    .size(60.dp)
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                colorResource(R.color.pink),
-                                colorResource(R.color.green)
-                            )
-                        ),
-                        shape = CircleShape
-                    )
-                    .padding(3.dp)
-            ) {
-                FloatingActionButton(
-                    onClick = {},
-                    Modifier
-                        .padding(2.dp)
-                        .size(58.dp),
-                    contentColor = Color.White,
-                    containerColor = colorResource(R.color.black3),
-                    shape = CircleShape
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.float_icon),
-                        contentDescription = null,
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
-            }
-        },
-        isFloatingActionButtonDocked = true,
-        floatingActionButtonPosition = FabPosition.Center,
-        backgroundColor = colorResource(R.color.blackBackground)
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .padding(paddingValues)
-                .background(color = colorResource(R.color.blackBackground))
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.bg1),
-                contentDescription = null, contentScale = ContentScale.Crop,
-                modifier = Modifier.matchParentSize()
-            )
-
-            MainContent(onItemClick)
+            })*/
+            Navigation()
         }
     }
 }
 
 @Composable
-fun MainContent(onItemClick: (MovieItemModel) -> Unit) {
+fun Navigation(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
 
-    val viewModel = MoviesViewModel()
-    val movies = remember { mutableStateListOf<MovieItemModel>() }
-
-    var showMoviesLoad by remember { mutableStateOf(true) }
-
-    LaunchedEffect(Unit) {
-        viewModel.loadMovies().observeForever {
-            movies.clear()
-            movies.addAll(it)
-            showMoviesLoad = false
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(top = 60.dp, bottom = 100.dp)
-            .padding(horizontal = 16.dp)
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = Screen.MovieList
     ) {
-        Text(
-            text = "Wanna add some movies?",
-            style = TextStyle(color = Color.White, fontSize = 25.sp),
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 16.dp, bottom = 16.dp)
-                .fillMaxWidth()
-        )
 
-        SearchBar(hint = "Search movies...")
-
-        SectionTitle("Movies")
-
-        if (showMoviesLoad) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
-            ) {
-                items(movies) { item ->
-                    MovieItem(item, onItemClick)
+        composable<Screen.MovieList> {
+            HomeScreen(
+                navController,
+                onItemClick = { movie ->
+                    navController.navigate(Screen.DetailMovie(1))
                 }
-            }
+            )
         }
 
+        composable<Screen.AddMovie> {
+            AddMovieScreen(navController, -1)
+        }
 
+        composable<Screen.DetailMovie> {
+            /*DetailScreen(
+                movie = ,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onFavClick = {
+
+                }
+            )*/
+        }
+
+        composable<Screen.ToSeeMovie> {
+            ToSeeMovieScreen()
+        }
     }
 }
 
-@Composable
-fun SectionTitle(title: String) {
-    Text(
-        text = title,
-        style = TextStyle(color = Color(0xffffc107), fontSize = 18.sp),
-        modifier = Modifier
-            .padding(start = 16.dp, top = 32.dp, bottom = 8.dp)
-            .fillMaxWidth(),
-        fontWeight = FontWeight.Bold
-    )
-}

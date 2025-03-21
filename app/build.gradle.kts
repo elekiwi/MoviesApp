@@ -8,6 +8,10 @@ plugins {
     alias(libs.plugins.daggerHiltAndroid)
 }
 
+hilt {
+    enableAggregatingTask = false
+}
+
 android {
     namespace = "com.elekiwi.moviesappprometeo"
     compileSdk = 35

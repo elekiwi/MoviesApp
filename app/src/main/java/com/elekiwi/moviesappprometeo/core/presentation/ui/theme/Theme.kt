@@ -63,7 +63,6 @@ fun MoviesAppPrometeoTheme(
         }
     }
 
-
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
