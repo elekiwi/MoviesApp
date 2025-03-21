@@ -22,7 +22,7 @@ interface MovieDao {
     fun getMovieById(id: Int): MovieEntity
 
     @Query("SELECT * FROM movies")
-    fun getAllMovies(): Flow<List<MovieEntity>>
+    fun getAllMovies(): List<MovieEntity>
 
     @Query("DELETE FROM movies")
     suspend fun clearMovies()
