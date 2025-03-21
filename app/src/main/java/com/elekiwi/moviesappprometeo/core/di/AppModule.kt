@@ -28,11 +28,11 @@ object AppModule {
         ).build()
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    fun provideMovieRepository(db: MovieDatabase): MovieListRepository {
-        return MovieListRepositoryImpl(db)
-    }*/
+    fun provideMovieDao(db: MovieDatabase): MovieDao {
+        return db.movieDao
+    }
 
     @Provides
     @Singleton

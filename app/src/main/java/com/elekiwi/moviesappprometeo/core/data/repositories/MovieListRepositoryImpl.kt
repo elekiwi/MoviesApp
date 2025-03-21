@@ -1,5 +1,6 @@
 package com.elekiwi.moviesappprometeo.core.data.repositories
 
+import android.util.Log
 import com.elekiwi.moviesappprometeo.core.data.local.MovieDao
 import com.elekiwi.moviesappprometeo.core.data.local.MovieDatabase
 import com.elekiwi.moviesappprometeo.core.data.mappers.ToMovieEntity

@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo.viewModels
+package com.elekiwi.moviesappprometeo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

@@ -1,5 +1,6 @@
-package com.elekiwi.moviesappprometeo.core.presentation
+package com.elekiwi.moviesappprometeo.moviesList.presentation
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -26,11 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -42,16 +38,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.elekiwi.moviesappprometeo.MovieItem
 import com.elekiwi.moviesappprometeo.R
 import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
+import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 import com.elekiwi.moviesappprometeo.core.presentation.components.BottomNavigationBar
 import com.elekiwi.moviesappprometeo.core.presentation.components.SearchBar
-import com.elekiwi.moviesappprometeo.viewModels.MoviesViewModel
+import com.elekiwi.moviesappprometeo.core.presentation.Screen
 
 @Composable
-fun HomeScreen(navController: NavController, onItemClick: (MovieItemModel) -> Unit = {}) {
+fun HomeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {}) {
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         floatingActionButton = {
@@ -107,19 +105,23 @@ fun HomeScreen(navController: NavController, onItemClick: (MovieItemModel) -> Un
 }
 
 @Composable
-fun HomeContent(onItemClick: (MovieItemModel) -> Unit) {
+fun HomeContent(
+    onItemClick: (Movie) -> Unit,
+    viewModel: MovieListViewModel = hiltViewModel()
+) {
 
-    val viewModel = MoviesViewModel()
-    val movies = remember { mutableStateListOf<MovieItemModel>() }
 
-    var showMoviesLoad by remember { mutableStateOf(true) }
+    //val movies = remember { mutableStateListOf<MovieItemModel>() }
+    //var showMoviesLoad by remember { mutableStateOf(true) }
 
+    val state = viewModel.movieListState.collectAsState()
+    Log.e("HomeLeo", "HomeContent: ${state.value.movieList.size}" )
     LaunchedEffect(Unit) {
-        viewModel.loadMovies().observeForever {
+        /*viewModel.loadMovies().observeForever {
             movies.clear()
             movies.addAll(it)
             showMoviesLoad = false
-        }
+        }*/
     }
 
     Column(
@@ -142,7 +144,7 @@ fun HomeContent(onItemClick: (MovieItemModel) -> Unit) {
 
         SectionTitle("Movies")
 
-        if (showMoviesLoad) {
+        if (state.value.isLoading) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,7 +158,8 @@ fun HomeContent(onItemClick: (MovieItemModel) -> Unit) {
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp)
             ) {
-                items(movies) { item ->
+                items(state.value.movieList.size) { item ->
+                    val item = state.value.movieList[item]
                     MovieItem(item, onItemClick)
                 }
             }

@@ -23,9 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
+import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 
 @Composable
-fun MovieItem(movie: MovieItemModel, onItemClick: (MovieItemModel) -> Unit) {
+fun MovieItem(movie: Movie, onItemClick: (Movie) -> Unit) {
     Column(
         modifier = Modifier
             .padding(4.dp)
@@ -34,7 +35,7 @@ fun MovieItem(movie: MovieItemModel, onItemClick: (MovieItemModel) -> Unit) {
             .background(color = Color(android.graphics.Color.parseColor("#2f2f39")))
     ) {
         AsyncImage(
-            model = movie.Poster,
+            model = movie.poster,
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -44,7 +45,7 @@ fun MovieItem(movie: MovieItemModel, onItemClick: (MovieItemModel) -> Unit) {
 
         Spacer(Modifier.height(8.dp))
 
-        Text(text = movie.Title,
+        Text(text = movie.title,
             modifier = Modifier.padding(4.dp),
             style = TextStyle(color = Color.White, fontSize = 11.sp),
             maxLines = 1
@@ -64,7 +65,7 @@ fun MovieItem(movie: MovieItemModel, onItemClick: (MovieItemModel) -> Unit) {
             )
 
             Spacer(Modifier.width(4.dp))
-            Text(text = movie.Imdb.toString(),
+            Text(text = movie.imdb.toString(),
                 style = TextStyle(color = Color.White, fontSize = 12.sp))
 
         }
