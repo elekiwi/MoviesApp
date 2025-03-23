@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.elekiwi.moviesappprometeo.R
+import com.elekiwi.moviesappprometeo.addMovie.presentation.components.GradientButton
+import com.elekiwi.moviesappprometeo.addMovie.presentation.components.GradientTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -131,6 +133,7 @@ fun AddMovieScreen(
             GradientTextField(
                 hint = "Description",
                 text = addMovieState.description,
+                maxLines = 4,
                 onValueChange = {
                     addMovieViewModel.onAction(AddMovieAction.UpdateDescription(it))
                 },
@@ -142,6 +145,7 @@ fun AddMovieScreen(
             GradientTextField(
                 hint = "Your comment here!",
                 modifier = Modifier.fillMaxWidth(),
+                maxLines = 4,
                 text = if (addMovieState.comment == "null") "" else addMovieState.comment,
                 onValueChange = {
                     addMovieViewModel.onAction(AddMovieAction.UpdateComment(it))
@@ -164,87 +168,9 @@ fun AddMovieScreen(
     }
 }
 
-@Composable
-fun GradientButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        shape = RoundedCornerShape(50.dp),
-        border = BorderStroke(
-            width = 4.dp, brush = Brush.linearGradient(
-                colors = listOf(colorResource(R.color.pink), colorResource(R.color.green))
-            )
-        ),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            contentColor = Color.White
-        )
-    ) {
-        Text(
-            text = text,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
 
-@Composable
-fun GradientTextField(
-    hint: String,
-    text: String,
-    onValueChange: (String) -> Unit = {},
-    modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
-) {
-    Box(
-        modifier = modifier
-            .height(60.dp)
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(colorResource(R.color.pink), colorResource(R.color.green))
-                ),
-                shape = RoundedCornerShape(50.dp)
-            )
-            .padding(4.dp)
-    ) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = { onValueChange(it) },
-            placeholder = {
-                Text(
-                    text = hint,
-                    color = Color.White,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            },
-            singleLine = true,
-            textStyle = TextStyle(
-                color = Color.White,
-                textAlign = TextAlign.Center
-            ),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.Transparent,
-                unfocusedBorderColor = Color.Transparent,
-                cursorColor = Color.White,
-                focusedLabelColor = Color.White,
-                unfocusedLabelColor = Color.White
-            ),
-            keyboardOptions = keyboardOptions,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = colorResource(R.color.black1),
-                    shape = RoundedCornerShape(50.dp)
-                )
-                .align(Alignment.Center)
-        )
-    }
-}
+
+
 
 @Preview
 @Composable
