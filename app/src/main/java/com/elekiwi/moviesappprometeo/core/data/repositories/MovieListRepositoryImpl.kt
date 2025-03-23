@@ -55,12 +55,13 @@ class MovieListRepositoryImpl @Inject constructor(
     override fun getAllMovies(): Flow<Resource<List<Movie>>> {
         return flow {
             emit(Resource.Loading())
-            val localMovieList = movieDao.getAllMovies()
+            var localMovieList = movieDao.getAllMovies()
             if (localMovieList.toList().isEmpty()) {
                 val remoteMovies = firebaseService.fetchMovies()
                 if (remoteMovies.isNotEmpty()) {
                     movieDao.clearMovies()
                     movieDao.insertMovies(remoteMovies.map { it.toMovieEntity() })
+                    localMovieList = movieDao.getAllMovies()
                 }
             }
 

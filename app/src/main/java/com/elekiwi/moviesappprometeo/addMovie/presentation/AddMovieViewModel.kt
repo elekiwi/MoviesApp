@@ -44,7 +44,6 @@ class AddMovieViewModel @Inject constructor(
             }
 
             AddMovieAction.SaveMovie -> {
-                Log.e("LeoDebug", "onAction: ")
                 viewModelScope.launch {
                     val isSaved = updateMovie()
                     _movieSavedChannel.send(isSaved)
@@ -107,7 +106,7 @@ class AddMovieViewModel @Inject constructor(
                 false,
                 _addMovieState.value.comment,
                 0,
-                id = 0
+                id = -1
             )
             return withContext(Dispatchers.IO) {
                 upsertMovie.invoke(updatedMovie)

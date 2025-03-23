@@ -23,10 +23,10 @@ class MovieListViewModel @Inject constructor(
 
 
     init {
-        getMovieList()
     }
 
-    private fun getMovieList() {
+
+    fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             _movieListState.update {
                 it.copy(
@@ -35,6 +35,7 @@ class MovieListViewModel @Inject constructor(
             }
 
             repository.getAllMovies().collectLatest { result ->
+                Log.e("LeoDebug", "getMovieList: ${result.data}", )
                 when(result) {
                     is Resource.Error -> {
                         _movieListState.update {

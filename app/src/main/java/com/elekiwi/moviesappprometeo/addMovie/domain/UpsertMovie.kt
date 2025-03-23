@@ -3,6 +3,7 @@ package com.elekiwi.moviesappprometeo.addMovie.domain
 import android.util.Log
 import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 import com.elekiwi.moviesappprometeo.core.domain.repositories.MovieListRepository
+import java.util.UUID
 
 class UpsertMovie(
     private val repository: MovieListRepository
@@ -11,33 +12,35 @@ class UpsertMovie(
     suspend operator fun invoke(
         movie: Movie
     ): Boolean {
-        Log.e("LeoDebug5", "invoke: ${movie.title}", )
 
         if (movie.title.isEmpty()) {
             return false
         }
 
         if (movie.description.isNullOrEmpty()) {
-            Log.e("LeoDebug4", "invoke: ${movie.description}", )
-
             return false
         }
 
-        Log.e("LeoDebug3", "invoke: ", )
+        val movieWithId = if (movie.id == -1) {
+            movie.copy(id = generateMovieId())
+        } else {
+            movie
+        }
+
         val updateMovie = Movie(
-            movie.title,
-            movie.description,
-            movie.poster,
-            movie.time,
-            movie.trailer,
-            movie.imdb,
-            movie.year,
-            movie.price,
-            movie.isSeen,
-            movie.toSee,
-            movie.comments,
-            movie.rating,
-            movie.id
+            movieWithId.title,
+            movieWithId.description,
+            movieWithId.poster,
+            movieWithId.time,
+            movieWithId.trailer,
+            movieWithId.imdb,
+            movieWithId.year,
+            movieWithId.price,
+            movieWithId.isSeen,
+            movieWithId.toSee,
+            movieWithId.comments,
+            movieWithId.rating,
+            movieWithId.id
         )
         return try {
             repository.upsertMovie(updateMovie)
@@ -45,6 +48,9 @@ class UpsertMovie(
         } catch (e: Exception) {
             false
         }
+    }
 
+    private fun generateMovieId(): Int {
+        return UUID.randomUUID().toString().hashCode()
     }
 }

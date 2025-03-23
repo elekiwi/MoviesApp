@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoviesAppPrometeo"
         tools:targetApi="31">
-        <activity
-            android:name=".detailMovie.presentation.DetailMovieActivity"
-            android:exported="false" />
+
         <activity
             android:name=".core.presentation.BaseActivity"
             android:exported="false" />

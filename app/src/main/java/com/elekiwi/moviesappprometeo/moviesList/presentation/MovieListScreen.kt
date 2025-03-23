@@ -1,5 +1,6 @@
 package com.elekiwi.moviesappprometeo.moviesList.presentation
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -108,49 +110,62 @@ fun HomeContent(
 ) {
     val state = viewModel.movieListState.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(top = 60.dp, bottom = 100.dp)
-            .padding(horizontal = 16.dp)
-    ) {
-        Text(
-            text = "Wanna add some movies?",
-            style = TextStyle(color = Color.White, fontSize = 25.sp),
+    LaunchedEffect(true) {
+        Log.e("LeoDebug", "HomeContent: " )
+        viewModel.getMovieList()
+    }
+
+    if (state.value.isLoading){
+        Box(modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = colorResource(R.color.pink))
+        }
+    } else {
+        Column(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(start = 16.dp, bottom = 16.dp)
-                .fillMaxWidth()
-        )
-
-        SearchBar(hint = "Search movies...")
-
-        SectionTitle("Movies")
-
-        if (state.value.isLoading) {
-            Box(
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(top = 60.dp, bottom = 100.dp)
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = "Wanna add some movies?",
+                style = TextStyle(color = Color.White, fontSize = 25.sp),
                 modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(start = 16.dp, bottom = 16.dp)
                     .fillMaxWidth()
-                    .height(50.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp)
-            ) {
-                items(state.value.movieList.size) { item ->
-                    val item = state.value.movieList[item]
-                    MovieItem(item, onItemClick)
+            )
+
+            SearchBar(hint = "Search movies...")
+
+            SectionTitle("Movies")
+
+            if (state.value.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(horizontal = 16.dp)
+                ) {
+                    items(state.value.movieList.size) { item ->
+                        val item = state.value.movieList[item]
+                        MovieItem(item, onItemClick)
+                    }
                 }
             }
+
+
         }
-
-
     }
+
 }
 
 @Composable

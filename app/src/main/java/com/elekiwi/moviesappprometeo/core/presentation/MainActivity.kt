@@ -13,20 +13,18 @@ import androidx.navigation.toRoute
 import com.elekiwi.moviesappprometeo.detailMovie.presentation.DetailScreen
 import com.elekiwi.moviesappprometeo.moviesList.presentation.HomeScreen
 import com.elekiwi.moviesappprometeo.addMovie.presentation.AddMovieScreen
+import com.elekiwi.moviesappprometeo.core.presentation.ui.theme.MoviesAppPrometeoTheme
 import com.elekiwi.moviesappprometeo.presentation.ToSeeMovieScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            /*MainScreen(onItemClick = { item ->
-                val intent = Intent(this, DetailMovieActivity::class.java)
-                intent.putExtra("object", item)
-                startActivity(intent)
-            })*/
-            Navigation()
+            MoviesAppPrometeoTheme {
+                Navigation()
+            }
         }
     }
 }
