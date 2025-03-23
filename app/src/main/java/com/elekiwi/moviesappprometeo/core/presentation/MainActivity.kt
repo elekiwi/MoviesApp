@@ -2,7 +2,6 @@ package com.elekiwi.moviesappprometeo.core.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +13,7 @@ import com.elekiwi.moviesappprometeo.detailMovie.presentation.DetailScreen
 import com.elekiwi.moviesappprometeo.moviesList.presentation.HomeScreen
 import com.elekiwi.moviesappprometeo.addMovie.presentation.AddMovieScreen
 import com.elekiwi.moviesappprometeo.core.presentation.ui.theme.MoviesAppPrometeoTheme
-import com.elekiwi.moviesappprometeo.presentation.ToSeeMovieScreen
+import com.elekiwi.moviesappprometeo.toSeeMovieScreen.presentation.ToSeeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -77,7 +76,12 @@ fun Navigation(modifier: Modifier = Modifier) {
         }
 
         composable<Screen.ToSeeMovie> {
-            ToSeeMovieScreen()
+            ToSeeScreen(
+                navController = navController,
+                onItemClick = { movie ->
+                    navController.navigate(Screen.DetailMovie(movieId = movie.id))
+                }
+            )
         }
     }
 }

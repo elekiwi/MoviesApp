@@ -1,10 +1,10 @@
-package com.elekiwi.moviesappprometeo.moviesList.presentation
+package com.elekiwi.moviesappprometeo.toSeeMovieScreen.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elekiwi.moviesappprometeo.core.domain.repositories.MovieListRepository
 import com.elekiwi.moviesappprometeo.core.util.Resource
+import com.elekiwi.moviesappprometeo.moviesList.presentation.MovieListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,9 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(
+class ToSeeMovieViewModel @Inject constructor(
     private val repository: MovieListRepository
 ): ViewModel() {
+
     private var _movieListState = MutableStateFlow(MovieListState())
     val movieListState = _movieListState.asStateFlow()
 
@@ -43,7 +44,9 @@ class MovieListViewModel @Inject constructor(
                         result.data?.let { list ->
                             _movieListState.update {
                                 it.copy(
-                                    movieList = list
+                                    movieList = list.filter {
+                                        it.toSee
+                                    }
                                 )
                             }
 

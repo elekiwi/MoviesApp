@@ -51,12 +51,11 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = selecttedItem == bottomMenuItem.label,
                 onClick = {
                     selecttedItem = bottomMenuItem.label
-                    Toast.makeText(contextForToast, bottomMenuItem.label, Toast.LENGTH_SHORT).show()
                     when (selecttedItem) {
                         "Home" -> {
                             navController.navigate(Screen.MovieList)
                         }
-                        "Favorite" -> {
+                        "To See" -> {
                             navController.navigate(Screen.ToSeeMovie)
                         }
                         "Seen" -> {
@@ -100,7 +99,7 @@ fun prepareButtomMenu(): List<BottomMenuItem> {
             icon = painterResource(id = R.drawable.btn_1)
         ),
         BottomMenuItem(
-            label = "Favorite",
+            label = "To See",
             icon = painterResource(id = R.drawable.btn_2)
         ),
         BottomMenuItem(
