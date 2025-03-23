@@ -11,6 +11,7 @@ data class Movie(
     val price: Double,
     val isSeen: Boolean = false,
     val toSee: Boolean = false,
-    val comments: String?,
-    val rating: Double
+    val comments: String? = "",
+    val rating: Int,
+    val id: Int
 )

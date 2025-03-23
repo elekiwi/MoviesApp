@@ -35,7 +35,8 @@ fun MovieEntity.toMovie(): Movie {
         isSeen = this.isSeen,
         toSee = this.toSee,
         comments = this.comments,
-        rating = this.rating
+        rating = this.rating.toInt(),
+        id = this.id!!
     )
 }
 
@@ -52,7 +53,8 @@ fun Movie.ToMovieEntity(): MovieEntity {
         isSeen = this.isSeen,
         toSee = this.toSee,
         comments = this.comments,
-        rating = this.rating
+        rating = this.rating.toDouble(),
+        id = this.id
     )
 }
 

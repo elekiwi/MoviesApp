@@ -23,7 +23,6 @@ class MovieListRepositoryImpl @Inject constructor(
 ): MovieListRepository {
     override suspend fun upsertMovie(movie: Movie) {
         movieDao.upsertMovie(movie.ToMovieEntity())
-        firebaseService.addMovie(movie.ToMovieItemModel())
     }
 
     override suspend fun insertAllMovies(movies: List<Movie>) {

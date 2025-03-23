@@ -1,9 +1,9 @@
-package com.elekiwi.moviesappprometeo.presentation
+package com.elekiwi.moviesappprometeo.detailMovie.presentation
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +23,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,38 +45,34 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.elekiwi.moviesappprometeo.R
-import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
-
-class DetailMovieActivity : BaseActivity() {
-    private lateinit var movieItem: MovieItemModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        movieItem = intent.getSerializableExtra("object") as MovieItemModel
-
-        setContent {
-            DetailScreen(movieItem,
-                onBackClick = {
-                    finish()
-                }, onFavClick = {
-
-                })
-        }
-    }
-}
-
+import com.elekiwi.moviesappprometeo.detailMovie.presentation.components.RatingBar
 
 @Composable
 fun DetailScreen(
-    movie: MovieItemModel,
+    id: Int,
     onBackClick: () -> Unit,
-    onFavClick: (MovieItemModel) -> Unit
+    onEditClick: () -> Unit,
+    viewModel: DetailMovieViewModel = hiltViewModel()
 ) {
+
+    val movieState by viewModel.detailMovieState.collectAsState()
+    val ratingState = remember { mutableIntStateOf(movieState.rating) }
+
+    LaunchedEffect(movieState.movie?.rating) {
+        movieState.movie?.let {
+            ratingState.intValue = it.rating
+        }
+    }
+    LaunchedEffect(id) {
+        viewModel.onAction(DetailMovieActions.LoadMovie(id))
+    }
+
     val scrollState = rememberScrollState()
     val isLoading = remember { mutableStateOf(false) }
 
@@ -75,6 +80,7 @@ fun DetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(R.color.blackBackground))
+            .padding(16.dp)
     ) {
         if (isLoading.value) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -94,15 +100,25 @@ fun DetailScreen(
                             .padding(start = 16.dp, top = 48.dp)
                             .clickable { onBackClick() }
                     )
-                    Image(
-                        painter = painterResource(R.drawable.fav),
+                    Icon(
+                        imageVector = when (movieState.movie?.toSee) {
+                            true -> Icons.Filled.Favorite
+                            false -> Icons.Filled.FavoriteBorder
+                            else -> Icons.Filled.FavoriteBorder
+                        },
+                        tint = Color.White,
                         contentDescription = null,
                         modifier = Modifier
                             .padding(start = 16.dp, top = 48.dp, end = 16.dp)
                             .align(Alignment.TopEnd)
+                            .clickable {
+                                viewModel.onAction(
+                                    DetailMovieActions.UpdateToSee(!movieState.isToSee)
+                                )
+                            }
                     )
                     AsyncImage(
-                        model = movie.Poster,
+                        model = movieState.movie?.poster,
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize(),
@@ -111,7 +127,7 @@ fun DetailScreen(
                     )
 
                     AsyncImage(
-                        model = movie.Poster,
+                        model = movieState.movie?.poster,
                         contentDescription = null,
                         modifier = Modifier
                             .size(210.dp, 300.dp)
@@ -138,7 +154,7 @@ fun DetailScreen(
                     )
 
                     Text(
-                        text = movie.Title,
+                        text = movieState.movie?.title ?: "Loading...",
                         style = TextStyle(color = Color.White, fontSize = 27.sp),
                         modifier = Modifier
                             .align(Alignment.BottomCenter)
@@ -167,7 +183,7 @@ fun DetailScreen(
                                 .padding(horizontal = 8.dp)
                         )
                         Text(
-                            text = "Imdb: ${movie.Imdb}",
+                            text = "Imdb: ${movieState.movie?.imdb}",
                             color = Color.White
                         )
 
@@ -179,7 +195,7 @@ fun DetailScreen(
                                 .padding(horizontal = 8.dp)
                         )
                         Text(
-                            text = "Runtime: ${movie.Time}",
+                            text = "Runtime: ${movieState.movie?.time}",
                             color = Color.White
                         )
 
@@ -191,7 +207,7 @@ fun DetailScreen(
                                 .padding(horizontal = 8.dp)
                         )
                         Text(
-                            text = "Release: ${movie.Year}",
+                            text = "Release: ${movieState.movie?.year}",
                             color = Color.White
                         )
                     }
@@ -208,7 +224,7 @@ fun DetailScreen(
                     Spacer(Modifier.height(8.dp))
 
                     Text(
-                        text = movie.Description,
+                        text = movieState.movie?.description.toString(),
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 14.sp
@@ -218,7 +234,7 @@ fun DetailScreen(
                     Spacer(Modifier.height(24.dp))
 
                     Text(
-                        text = "Actors",
+                        text = "Your rate & comment: ",
                         style = TextStyle(
                             color = Color.White,
                             fontSize = 16.sp
@@ -226,35 +242,56 @@ fun DetailScreen(
                     )
                     Spacer(Modifier.height(8.dp))
 
-                    LazyRow(
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        items(movie.Casts.size) {
-                            movie.Casts[it].Actor.let {
-                                Text(
-                                    text = "$it |",
-                                    color = Color.White, fontSize = 14.sp
-                                )
-                            }
+                    RatingBar(
+                        ratingState = ratingState,
+                        ratingIconPainter = painterResource(id = R.drawable.star),
+                        size = 48.dp,
+                        selectedColor = colorResource(R.color.green),
+                        onRatingChanged = { newRating ->
+                            viewModel.onAction(
+                                DetailMovieActions.UpdateRating(newRating)
+                            )
                         }
-                    }
-                }
-                LazyRow(
-                    contentPadding = PaddingValues(8.dp)
-                ) {
-                    items(movie.Casts.size) {
-                        AsyncImage(
-                            model = movie.Casts[it].PicUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(75.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(50.dp)),
-                            contentScale = ContentScale.Crop
+                    )
+                    Spacer(Modifier.height(16.dp))
+
+                    if (movieState.movie?.comments != "null") {
+                        Text(
+                            text = movieState.movie?.comments ?: "No comments yet",
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 14.sp
+                            )
                         )
                     }
+
+
                 }
             }
+        }
+
+        FloatingActionButton(
+            onClick = {
+                onEditClick()
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .border(
+                    4.dp, brush = Brush.linearGradient(
+                        colors = listOf(
+                            colorResource(R.color.pink),
+                            colorResource(R.color.green)
+                        )
+                    ), RoundedCornerShape(16.dp)
+                )
+                .padding(0.dp),
+            containerColor = colorResource(R.color.black1)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = "Edit movie",
+                tint = Color.White
+            )
         }
     }
 }

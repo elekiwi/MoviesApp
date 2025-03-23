@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.elekiwi.moviesappprometeo.detailMovie.presentation.DetailScreen
 import com.elekiwi.moviesappprometeo.moviesList.presentation.HomeScreen
 import com.elekiwi.moviesappprometeo.presentation.AddMovieScreen
 import com.elekiwi.moviesappprometeo.presentation.ToSeeMovieScreen
@@ -42,7 +44,7 @@ fun Navigation(modifier: Modifier = Modifier) {
             HomeScreen(
                 navController,
                 onItemClick = { movie ->
-                    navController.navigate(Screen.DetailMovie(1))
+                    navController.navigate(Screen.DetailMovie(movieId = movie.id))
                 }
             )
         }
@@ -51,16 +53,18 @@ fun Navigation(modifier: Modifier = Modifier) {
             AddMovieScreen(navController, -1)
         }
 
-        composable<Screen.DetailMovie> {
-            /*DetailScreen(
-                movie = ,
+        composable<Screen.DetailMovie> { backStackEntry ->
+            val movieDetailScreen: Screen.DetailMovie = backStackEntry.toRoute()
+
+            DetailScreen(
+                id = movieDetailScreen.movieId,
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onFavClick = {
+                onEditClick = {
 
                 }
-            )*/
+            )
         }
 
         composable<Screen.ToSeeMovie> {

@@ -109,20 +109,7 @@ fun HomeContent(
     onItemClick: (Movie) -> Unit,
     viewModel: MovieListViewModel = hiltViewModel()
 ) {
-
-
-    //val movies = remember { mutableStateListOf<MovieItemModel>() }
-    //var showMoviesLoad by remember { mutableStateOf(true) }
-
     val state = viewModel.movieListState.collectAsState()
-    Log.e("HomeLeo", "HomeContent: ${state.value.movieList.size}" )
-    LaunchedEffect(Unit) {
-        /*viewModel.loadMovies().observeForever {
-            movies.clear()
-            movies.addAll(it)
-            showMoviesLoad = false
-        }*/
-    }
 
     Column(
         modifier = Modifier
