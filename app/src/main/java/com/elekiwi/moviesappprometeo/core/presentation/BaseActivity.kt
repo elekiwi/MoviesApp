@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo.presentation
+package com.elekiwi.moviesappprometeo.core.presentation
 
 import android.os.Bundle
 import android.view.WindowManager

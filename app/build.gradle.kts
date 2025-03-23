@@ -103,4 +103,5 @@ dependencies {
 
     // Lifecycle ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
 }

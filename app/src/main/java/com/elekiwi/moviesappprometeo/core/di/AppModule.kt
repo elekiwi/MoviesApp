@@ -2,6 +2,7 @@ package com.elekiwi.moviesappprometeo.core.di
 
 import android.app.Application
 import androidx.room.Room
+import com.elekiwi.moviesappprometeo.addMovie.domain.UpsertMovie
 import com.elekiwi.moviesappprometeo.core.data.local.MovieDao
 import com.elekiwi.moviesappprometeo.core.data.local.MovieDatabase
 import com.elekiwi.moviesappprometeo.core.data.remote.services.FirebaseMovieService
@@ -53,5 +54,11 @@ object AppModule {
         firebaseService: FirebaseMovieService
     ): MovieListRepository {
         return MovieListRepositoryImpl(movieDao, firebaseService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpsertMovieUseCase(repository: MovieListRepository): UpsertMovie {
+        return UpsertMovie(repository)
     }
 }

@@ -18,7 +18,7 @@
             android:name=".detailMovie.presentation.DetailMovieActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.BaseActivity"
+            android:name=".core.presentation.BaseActivity"
             android:exported="false" />
         <activity
             android:name=".core.presentation.SplashActivity"

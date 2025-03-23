@@ -2,7 +2,7 @@ package com.elekiwi.moviesappprometeo.core.domain.models
 
 data class Movie(
     val title: String,
-    val description: String?,
+    val description: String? = "",
     val poster: String?,
     val time: String?,
     val trailer: String?,
@@ -12,6 +12,6 @@ data class Movie(
     val isSeen: Boolean = false,
     val toSee: Boolean = false,
     val comments: String? = "",
-    val rating: Int,
+    val rating: Int = 0,
     val id: Int
 )

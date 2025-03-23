@@ -1,6 +1,5 @@
 package com.elekiwi.moviesappprometeo.moviesList.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +24,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,9 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.elekiwi.moviesappprometeo.MovieItem
+import com.elekiwi.moviesappprometeo.detailMovie.presentation.components.MovieItem
 import com.elekiwi.moviesappprometeo.R
-import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
 import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 import com.elekiwi.moviesappprometeo.core.presentation.components.BottomNavigationBar
 import com.elekiwi.moviesappprometeo.core.presentation.components.SearchBar

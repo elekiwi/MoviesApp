@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo
+package com.elekiwi.moviesappprometeo.detailMovie.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,7 +22,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.elekiwi.moviesappprometeo.core.data.remote.MovieItemModel
 import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 
 @Composable
