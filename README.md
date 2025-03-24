@@ -1,6 +1,8 @@
 # MoviesApp
 Movies app to keep track of already seen movies.
 
+![Movies App (1)](https://github.com/user-attachments/assets/b11c1cc6-5834-468c-8cf3-e37da47d96c5)
+
 ## Functionalities
 
 - **Add movies** to the app.
