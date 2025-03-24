@@ -1,6 +1,5 @@
 package com.elekiwi.moviesappprometeo.moviesList.presentation
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,12 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.elekiwi.moviesappprometeo.detailMovie.presentation.components.MovieItem
 import com.elekiwi.moviesappprometeo.R
 import com.elekiwi.moviesappprometeo.core.domain.models.Movie
+import com.elekiwi.moviesappprometeo.core.presentation.Screen
 import com.elekiwi.moviesappprometeo.core.presentation.components.BottomNavigationBar
 import com.elekiwi.moviesappprometeo.core.presentation.components.SearchBar
-import com.elekiwi.moviesappprometeo.core.presentation.Screen
+import com.elekiwi.moviesappprometeo.detailMovie.presentation.components.MovieItem
 
 @Composable
 fun HomeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {}) {

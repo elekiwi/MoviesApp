@@ -69,14 +69,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("com.github.bumptech.glide:glide:4.13.2")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation("androidx.compose.foundation:foundation:1.7.8")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
-    implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
-    implementation("com.google.accompanist:accompanist-pager:0.28.0")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
+    //implementation("com.github.bumptech.glide:glide:4.13.2")
+    //implementation("com.google.code.gson:gson:2.10.1")
+    //implementation("io.coil-kt:coil-compose:2.6.0")
+    //implementation("androidx.compose.foundation:foundation:1.7.8")
+    //implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    //implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
 
     // Room
     implementation(libs.bundles.room)
@@ -103,5 +101,13 @@ dependencies {
 
     // Lifecycle ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    //Coil
+    implementation(libs.coil.kt.coil.compose)
+
+    //Accompanist
+    implementation(libs.accompanist.pager)
+    implementation(libs.google.accompanist.pager.indicators)
+
 
 }

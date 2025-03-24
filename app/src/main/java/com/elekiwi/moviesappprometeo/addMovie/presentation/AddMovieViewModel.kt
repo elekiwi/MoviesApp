@@ -1,6 +1,5 @@
 package com.elekiwi.moviesappprometeo.addMovie.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elekiwi.moviesappprometeo.addMovie.domain.UpsertMovie

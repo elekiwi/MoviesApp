@@ -1,6 +1,5 @@
 package com.elekiwi.moviesappprometeo.moviesList.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elekiwi.moviesappprometeo.core.domain.repositories.MovieListRepository

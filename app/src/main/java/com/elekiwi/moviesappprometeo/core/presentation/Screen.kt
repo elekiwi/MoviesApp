@@ -11,4 +11,6 @@ sealed interface Screen {
     data class AddMovie(val movieId: Int = -1): Screen
     @Serializable
     data object ToSeeMovie: Screen
+    @Serializable
+    data object SeenMovie: Screen
 }

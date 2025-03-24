@@ -40,7 +40,7 @@ import com.elekiwi.moviesappprometeo.moviesList.presentation.SectionTitle
 import com.elekiwi.moviesappprometeo.toSeeMovie.presentation.components.MovieItemToSee
 
 @Composable
-fun ToSeeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {}) {
+fun ToSeeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {}, toSeeMovie: Boolean) {
     Scaffold(
         bottomBar = { BottomNavigationBar(navController) },
         floatingActionButton = {
@@ -90,7 +90,7 @@ fun ToSeeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {})
                 modifier = Modifier.matchParentSize()
             )
 
-            ToSeeMovieContent(onItemClick)
+            ToSeeMovieContent(onItemClick, toSeeMovie)
         }
     }
 }
@@ -98,12 +98,13 @@ fun ToSeeScreen(navController: NavController, onItemClick: (Movie) -> Unit = {})
 @Composable
 fun ToSeeMovieContent(
     onItemClick: (Movie) -> Unit,
+    toSeeMovie: Boolean,
     viewModel: ToSeeMovieViewModel = hiltViewModel()
 ) {
     val state = viewModel.movieListState.collectAsState()
 
     LaunchedEffect(true) {
-        viewModel.getMovieList()
+        viewModel.getMovieList(toSeeMovie)
     }
 
     if (state.value.isLoading) {

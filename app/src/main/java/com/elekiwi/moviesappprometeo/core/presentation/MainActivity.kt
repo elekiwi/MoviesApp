@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.elekiwi.moviesappprometeo.detailMovie.presentation.DetailScreen
-import com.elekiwi.moviesappprometeo.moviesList.presentation.HomeScreen
 import com.elekiwi.moviesappprometeo.addMovie.presentation.AddMovieScreen
 import com.elekiwi.moviesappprometeo.core.presentation.ui.theme.MoviesAppPrometeoTheme
+import com.elekiwi.moviesappprometeo.detailMovie.presentation.DetailScreen
+import com.elekiwi.moviesappprometeo.moviesList.presentation.HomeScreen
 import com.elekiwi.moviesappprometeo.toSeeMovie.presentation.ToSeeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,6 +76,17 @@ fun Navigation(modifier: Modifier = Modifier) {
         composable<Screen.ToSeeMovie> {
             ToSeeScreen(
                 navController = navController,
+                toSeeMovie = true,
+                onItemClick = { movie ->
+                    navController.navigate(Screen.DetailMovie(movieId = movie.id))
+                }
+            )
+        }
+
+        composable<Screen.SeenMovie> {
+            ToSeeScreen(
+                navController = navController,
+                toSeeMovie = false,
                 onItemClick = { movie ->
                     navController.navigate(Screen.DetailMovie(movieId = movie.id))
                 }

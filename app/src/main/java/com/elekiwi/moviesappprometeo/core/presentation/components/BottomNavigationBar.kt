@@ -58,7 +58,7 @@ fun BottomNavigationBar(navController: NavController) {
                             navController.navigate(Screen.ToSeeMovie)
                         }
                         "Seen" -> {
-                            navController.navigate(Screen.ToSeeMovie)
+                            navController.navigate(Screen.SeenMovie)
                         }
                         "For price" -> {}
                     }
