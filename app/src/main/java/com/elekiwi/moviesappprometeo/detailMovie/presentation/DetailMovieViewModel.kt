@@ -1,15 +1,12 @@
 package com.elekiwi.moviesappprometeo.detailMovie.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 import com.elekiwi.moviesappprometeo.core.domain.repositories.MovieListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,8 +28,10 @@ class DetailMovieViewModel @Inject constructor(
             is DetailMovieActions.UpdateComment -> {
                 _detailMovieState.update {
                     it.copy(comment = action.comment,
-                        movie = it.movie?.copy(comments = action.comment))
+                        movie = it.movie?.copy(comments = action.comment)
+                    )
                 }
+                updateMovie()
             }
             is DetailMovieActions.UpdateRating -> {
                 _detailMovieState.update {

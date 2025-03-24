@@ -110,7 +110,7 @@ fun AddMovieScreen(
             Spacer(Modifier.height(16.dp))
 
             Text(
-                text = "Add a movie",
+                text = if (movieId == -1) "Add a movie" else "Edit movie",
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 36.sp,
@@ -154,7 +154,7 @@ fun AddMovieScreen(
             Spacer(Modifier.height(64.dp))
 
             GradientButton(
-                text = "Add",
+                text = "Save",
                 onClick = {
                     addMovieViewModel.onAction(
                         AddMovieAction.SaveMovie

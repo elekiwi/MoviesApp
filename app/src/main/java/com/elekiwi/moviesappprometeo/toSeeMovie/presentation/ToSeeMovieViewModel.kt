@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo.toSeeMovieScreen.presentation
+package com.elekiwi.moviesappprometeo.toSeeMovie.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +19,7 @@ class ToSeeMovieViewModel @Inject constructor(
     private val repository: MovieListRepository
 ): ViewModel() {
 
-    private var _movieListState = MutableStateFlow(MovieListState())
+    private var _movieListState = MutableStateFlow(ToSeeMovieState())
     val movieListState = _movieListState.asStateFlow()
 
     fun getMovieList() {
@@ -49,7 +49,6 @@ class ToSeeMovieViewModel @Inject constructor(
                                     }
                                 )
                             }
-
                         }
                     }
                     is Resource.Loading -> {

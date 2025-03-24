@@ -1,6 +1,5 @@
 package com.elekiwi.moviesappprometeo.addMovie.domain
 
-import android.util.Log
 import com.elekiwi.moviesappprometeo.core.domain.models.Movie
 import com.elekiwi.moviesappprometeo.core.domain.repositories.MovieListRepository
 import java.util.UUID

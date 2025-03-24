@@ -1,4 +1,4 @@
-package com.elekiwi.moviesappprometeo.toSeeMovieScreen.presentation.components
+package com.elekiwi.moviesappprometeo.toSeeMovie.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

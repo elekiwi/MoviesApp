@@ -1,7 +1,6 @@
 package com.elekiwi.moviesappprometeo.detailMovie.presentation
 
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -270,7 +269,6 @@ fun DetailScreen(
 
         FloatingActionButton(
             onClick = {
-                Log.e("LeoDebug2", "DetailScreen: ${movieState.movieId}", )
                 onEditClick(movieState.movieId)
             },
             modifier = Modifier
