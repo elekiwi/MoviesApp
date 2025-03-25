@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "791816608510",
+    "project_id": "moviesprometeo",
+    "storage_bucket": "moviesprometeo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791816608510:android:1a1e759a09bc8e461d63af",
+        "android_client_info": {
+          "package_name": "com.elekiwi.moviesappprometeo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTy28GzqXoi8lvxZglJDO8LuZBKsti4Sg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
